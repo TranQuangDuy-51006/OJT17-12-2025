@@ -10,7 +10,7 @@ import PromotionsPage from "../pages/Promotions/PromotionsPage";
 import TicketPricing from "../pages/TicketPrice/TicketPricing";
 import AdminLayout from "../pages/Admin/AdminLayout";
 import BookingManager from "../pages/Admin/BookingManager";
-import Dashboard from "../pages/Admin/Dashboard";
+import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 // import FestivalManager from "../pages/Admin/FestivalManager";
 import MovieManager from "../pages/Admin/MovieManager";
 import NewsManager from "../pages/Admin/NewsManager";
@@ -28,8 +28,6 @@ import MovieDetail from "../pages/MovieDetail/MovieDetail";
 import Payment from "../pages/MovieDetail/Payment/Payment";
 import PaymentSuccess from "../pages/MovieDetail/Payment/PaymentSuccess/PaymentSuccess";
 
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -45,23 +43,22 @@ export const router = createBrowserRouter([
       { path: "calendar", element: <Calendar /> },
       {
         path: "bookmarks",
-        element: <BookmarkButton movieId={1} size={20} />
+        element: <BookmarkButton movieId={1} size={20} />,
       },
       {
         path: "movieDetail/:id",
-        element: <MovieDetail/>
-      },
-      { 
-        path:"payment",
-        element: <Payment/>
+        element: <MovieDetail />,
       },
       {
-        path:"payment-success",
-        element:<PaymentSuccess/>
-      }
+        path: "payment",
+        element: <Payment />,
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess />,
+      },
     ],
   },
-
 
   {
     element: <AdminGuard />,
@@ -80,7 +77,6 @@ export const router = createBrowserRouter([
           { path: "news", element: <NewsManager /> },
           { path: "festival", element: <FestivalManager /> },
           { path: "promotions", element: <PromotionManager /> },
-
         ],
       },
     ],
