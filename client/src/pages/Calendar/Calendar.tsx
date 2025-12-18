@@ -8,7 +8,6 @@ import { getAllShowtime } from "../../store/slices/calendar";
 import { getAllMovie } from "../../store/slices/movieDetail";
 import type { AppDispatch, RootState } from "../../store/stores";
 import type { Genre } from "../../types";
-import CalendarDN from "../../components/CalendarDN/CalendarDN";
 
 export default function Calendar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +16,7 @@ export default function Calendar() {
   const { movie } = useSelector((state: RootState) => state.movie);
 
   const [listDate, setListDate] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   const [category, setCategory] = useState<Genre[]>([]);
 
@@ -116,6 +115,7 @@ export default function Calendar() {
               ageRating={movieDetail.description}
               showtime={times}
               typeMovie={movieDetail.type}
+              day={selectedDate}
             />
           );
         })}

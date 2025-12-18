@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./CardCalendar.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,16 @@ interface CardCalendarProps {
   time: number;
   typeMovie: string;
   id: number;
+  day: string;
+}
+
+/* ===================== HELPER ===================== */
+function sortTimes(times: string[]) {
+  return [...times].sort((a, b) => {
+    const [ah, am] = a.split(":").map(Number);
+    const [bh, bm] = b.split(":").map(Number);
+    return ah * 60 + am - (bh * 60 + bm);
+  });
 }
 
 const CardCalendar: React.FC<CardCalendarProps> = ({
@@ -26,18 +36,21 @@ const CardCalendar: React.FC<CardCalendarProps> = ({
   time,
   typeMovie,
   id,
+  day,
 }) => {
   const navigate = useNavigate();
+
+  /* ===================== SORT SHOWTIME ===================== */
+  const sortedShowtime = useMemo(() => sortTimes(showtime), [showtime]);
+
   return (
-    <div
-      className={styles.card}
-      onClick={() => {
-        navigate(`/movieDetail/${id}`);
-      }}
-    >
-      <div className={styles.cardImage}>
+    <div className={styles.card}>
+      {/* ===================== IMAGE ===================== */}
+      <div className={styles.cardImage} onClick={() => navigate(`/movieDetail/${id}`)}>
         <img src={image} alt={title} />
       </div>
+
+      {/* ===================== CONTENT ===================== */}
       <div className={styles.cardContent}>
         <div className={styles.info}>
           <div className={styles.flex}>
@@ -47,15 +60,28 @@ const CardCalendar: React.FC<CardCalendarProps> = ({
             </div>
             <div className={styles.type}>{typeMovie}</div>
           </div>
-          <div className={styles.title}>{title}</div>
+
+          <div className={styles.title} onClick={() => navigate(`/movieDetail/${id}`)}>
+            {title}
+          </div>
+
           <div className={styles.origin}>Xuất xứ: {origin}</div>
           <div className={styles.releaseDate}>Khởi chiếu: {releaseDate}</div>
           <div className={styles.rating}>{ageRating}</div>
         </div>
-        <div>Lịch chiếu</div>
+
+        {/* ===================== SHOWTIME ===================== */}
+        <div className={styles.scheduleTitle}>Lịch chiếu</div>
+
         <div className={styles.showTimeBox}>
-          {showtime.map((t, i) => (
-            <button key={i} className={styles.showtimeButton}>
+          {sortedShowtime.map((t) => (
+            <button
+              key={t}
+              className={styles.showtimeButton}
+              onClick={() => {
+                navigate(`/movieDetail/${id}?day=${day}&time=${t}`);
+              }}
+            >
               {t}
             </button>
           ))}

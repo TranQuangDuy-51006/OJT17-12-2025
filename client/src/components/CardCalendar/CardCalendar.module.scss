@@ -8,12 +8,12 @@
   font-family: "Arial", sans-serif;
   border: 1px solid #444;
   width: 100%;
-  cursor: pointer;
 }
 
 .cardImage {
   flex: 0 0 120px;
   overflow: hidden;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -51,6 +51,7 @@
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 4px;
+  cursor: pointer;
 }
 
 .origin {
